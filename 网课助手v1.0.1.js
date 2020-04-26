@@ -1,9 +1,10 @@
 // ==UserScript==
 //本脚本仅供学习与交流使用，完全免费，本人不接受任何捐赠
-// @name         （新接口）网课助手
-// @namespace    万能的小江
-// @version      1.0.0
-// @description  微信公众号：万能的小江。自动挂机看尔雅MOOC，支持视频、音频、文档、图书自动完成，章节测验自动答题提交，支持自动切换任务点、挂机阅读时长、自动登录等，解除各类功能限制，开放自定义参数
+//自动提交已取消，需要打开，请将47行auto参数改为1
+// @name         网课助手v1.0.1
+// @namespace    万能的小江江
+// @version      1.0.1
+// @description  微信公众号：万能的小江江。支持多接口搜题，自动挂机看尔雅MOOC，支持视频、音频、文档、图书自动完成，章节测验自动答题提交，支持自动切换任务点、挂机阅读时长、自动登录等，解除各类功能限制，开放自定义参数
 // @author       万能的小江
 // @match        *://*.chaoxing.com/*
 // @match        *://*.edu.cn/*
@@ -12,15 +13,14 @@
 // @grant        unsafeWindow
 // @grant        GM_xmlhttpRequest
 // @grant        GM_setClipboard
-// @supportURL   https://greasyfork.org/zh-CN/scripts/369625/feedback
+// @supportURL   http://wh.mdji.cn
 // @license      MIT
 // ==/UserScript==
-
 // 设置修改后，需要刷新或重新打开网课页面才会生效
 var setting = {
     // 5E3 == 5000，科学记数法，表示毫秒数
     time: 5e3, // 默认响应速度为5秒，不建议小于3秒
-    token: "", // 捐助用户可以使用定制功能，更精准的匹配答案，此处填写捐助后获取的识别码
+    token: "", //
     review: 0, // 复习模式，完整挂机视频(音频)时长，支持挂机任务点已完成的视频和音频，默认关闭
     queue: 1, // 队列模式，开启后任务点逐一完成，关闭则单页面所有任务点同时进行，默认开启
 
@@ -44,7 +44,7 @@ var setting = {
     rate: "1", // 视频播放默认倍率，参数范围0∪[0.0625,16]，'0'为秒过，默认'1'倍
 
     // 仅开启work时，修改此处才会生效
-    auto: 1, // 答题完成后自动提交，默认关闭
+    auto: 0, // 答题完成后自动提交，默认关闭
     none: 0, // 无匹配答案时执行默认操作，关闭后若题目无匹配答案则会暂时保存已作答的题目，默认关闭
     scale: 0, // 富文本编辑器高度自动拉伸，用于文本类题目，答题框根据内容自动调整大小，默认关闭
 
@@ -205,8 +205,8 @@ if (url == "/mycourse/studentstudy") {
 } else if (location.hostname == "i.mooc.chaoxing.com") {
   _self.layui.use("layer", function () {
     this.layer.open({
-      content: "拖动进度条、倍速播放、秒过会导致不良记录！",
-      title: "超星网课助手提示",
+      content: "拖动进度条、倍速播放、秒过会导致不良记录！<br>微信公众号：万能的小江江<br>本脚本仅供学习与交流使用，请勿用于任何非法用途",
+      title: "网课助手温馨提示",
       btn: "我已知悉",
       offset: "t",
       closeBtn: 0,
@@ -473,7 +473,7 @@ function findAnswer() {
             "</font> 道题目待完善（已深色标注）",
           saveThis,
         ]
-      : ["答题已完成", submitThis];
+      : ["答题已完成<br>自动提交已取消", submitThis];
     setting.div
       .children("div:eq(0)")
       .data("html", arr[0])
